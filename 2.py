@@ -1,4 +1,4 @@
-#hello
-from turtle import *
+import turtle 
 print('amazing')
-circle(200)
+turtle.circle(100,180)
+turtle.done()
