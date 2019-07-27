@@ -31,10 +31,38 @@ plt.show()'''
 
 from matplotlib.pyplot import *
 import numpy as np
+import matplotlib
+
+matplotlib.rcParams['font.family'] = 'sans-serif'  
+matplotlib.rcParams['font.sans-serif'] = ['AR PL UKai CN']
+
 x = [x for x in range(-100,100)]
 y = [((x)**2-2000) for x in range(-100,100)]
 new_xtic = [n for n in range(-100,101,40)]
-xticks(new_xtic)
+
+
+index = -1
+action = False
+for value in new_xtic:
+    if value == 0:
+        index+=1
+        break
+    elif value > 0:
+        action = True
+        index+=1
+        break
+    else:
+        index+=1
+
+if action:
+    zh_xtic = new_xtic[0:index]+['原点']+new_xtic[index:-1]
+    new_xtic = new_xtic[0:index]+[0]+new_xtic[index:-1]
+else:
+    zh_xtic = new_xtic[:]
+    zh_xtic[index] = '原点'
+
+
+xticks(new_xtic,zh_xtic)
 plot(x,y,label='line')
 
 x1 = np.random.normal(500,100,100)
@@ -42,7 +70,20 @@ x2 = np.random.normal(1000,100,100)
 plot(x1,label='normal line1')
 plot(x2,label='normal line2')
 
+
+
 legend(loc='best',ncol=3)
+# best
+# upper right
+# upper left
+# lower left
+# lower right
+# right
+# center left
+# center right
+# lower center
+# upper center
+# center
 annotate("the 1000's normal line",(25,1000),xytext = (10,2000),arrowprops = dict(arrowstyle='->'))
 
 gca().spines['right'].set_color('none')
